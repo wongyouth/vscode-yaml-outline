@@ -3,12 +3,23 @@
   "displayName": "YAML Symbols",
   "description": "Provide Symbols for YAML files",
   "publisher": "wongyouth",
+  "homepage": "https://github.com/wongyouth/vscode-yaml-symbols",
+  "bugs": {
+    "url": "https://github.com/wongyouth/vscode-yaml-symbols/issues"
+  },
+  "repository": "https://github.com/wongyouth/vscode-yaml-symbols",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.96.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
+  ],
+  "keywords": [
+    "yaml",
+    "symbols",
+    "path",
+    "key"
   ],
   "activationEvents": [
     "onLanguage:yaml"
