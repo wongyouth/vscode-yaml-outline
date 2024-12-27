@@ -1,7 +1,7 @@
 {
-  "name": "yaml-symbols",
-  "displayName": "YAML Symbols",
-  "description": "Provide Symbols for YAML files",
+  "name": "vscode-yaml-symbols",
+  "displayName": "YAML-Symbols",
+  "description": "Use key path as symbols for YAML files",
   "publisher": "wongyouth",
   "homepage": "https://github.com/wongyouth/vscode-yaml-symbols",
   "bugs": {
