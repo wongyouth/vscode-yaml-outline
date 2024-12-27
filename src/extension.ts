@@ -14,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   let disposable = vscode.languages.registerDocumentSymbolProvider(
     selector,
-    new YAMLDocumentSymbolProvider()
+    new YAMLDocumentSymbolProvider(),
   );
 
   context.subscriptions.push(disposable);

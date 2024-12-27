@@ -1,4 +1,10 @@
-import Yaml, { isMap, isSeq, isPair, isScalar } from 'yaml';
+import Yaml, { isMap, isPair, isScalar, isSeq } from 'yaml';
+
+export type KeyInDocument = {
+  start: number;
+  end: number;
+  key: string;
+};
 
 export class YamlParser {
   public readonly id = 'yaml';
@@ -28,7 +34,7 @@ export class YamlParser {
       if (isPair(node) && isScalar(node.key) && isScalar(node.value) && node.value.type) {
         if (
           !['BLOCK_FOLDED', 'BLOCK_LITERAL', 'PLAIN', 'QUOTE_DOUBLE', 'QUOTE_SINGLE'].includes(
-            node.value.type
+            node.value.type,
           )
         ) {
           return findPairs(node.value, [...path, node.key.toString()]);
@@ -41,7 +47,6 @@ export class YamlParser {
               start,
               end,
               key,
-              quoted: true,
             },
           ];
         }

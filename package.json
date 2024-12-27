@@ -2,6 +2,7 @@
   "name": "yaml-symbols",
   "displayName": "YAML Symbols",
   "description": "Provide Symbols for YAML files",
+  "publisher": "wongyouth",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.96.0"
@@ -9,16 +10,10 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onLanguage:yaml"
+  ],
   "main": "./dist/extension.js",
-  "contributes": {
-    "commands": [
-      {
-        "command": "yaml-symbols.helloWorld",
-        "title": "Hello World"
-      }
-    ]
-  },
   "scripts": {
     "vscode:prepublish": "pnpm run package",
     "compile": "pnpm run check-types && pnpm run lint && node esbuild.js",
