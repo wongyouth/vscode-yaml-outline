@@ -1,6 +1,6 @@
 import Yaml, { isMap, isPair, isScalar, isSeq } from 'yaml';
 
-export type KeyInDocument = {
+export type KeyRange = {
   start: number;
   end: number;
   key: string;
@@ -22,24 +22,18 @@ export class YamlParser {
   parseAST(text: string) {
     const doc = Yaml.parseDocument(text);
 
-    const findPairs = (node: any, path: string[] = []): KeyInDocument[] => {
-      if (!node) {
-        return [];
-      }
-
-      if (isMap(node) || isSeq(node)) {
+    const findPairs = (node: any, path: string[] = []): KeyRange[] => {
+      if (isMap(node)) {
         return node.items.flatMap((m) => findPairs(m, path));
       }
 
-      if (isPair(node) && isScalar(node.key) && isScalar(node.value) && node.value.type) {
-        if (
-          !['BLOCK_FOLDED', 'BLOCK_LITERAL', 'PLAIN', 'QUOTE_DOUBLE', 'QUOTE_SINGLE'].includes(
-            node.value.type,
-          )
-        ) {
+      if (isPair(node) && isScalar(node.key)) {
+        if (isMap(node.value)) {
           return findPairs(node.value, [...path, node.key.toString()]);
-        } else if (node.value.range) {
-          const [start, end, _nodeEnd] = node.value.range;
+        }
+
+        if (node.key.range) {
+          const [start, end, _nodeEnd] = node.key.range;
           const key = [...path, node.key.toString()].join('.');
 
           return [

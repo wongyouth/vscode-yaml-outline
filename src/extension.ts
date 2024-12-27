@@ -8,13 +8,9 @@ import { YAMLDocumentSymbolProvider } from './yaml-document-symbol-provider';
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "yaml-symbols" is now active!');
 
-  const selector: vscode.DocumentSelector = {
-    language: 'yaml',
-  };
-
   let disposable = vscode.languages.registerDocumentSymbolProvider(
-    selector,
-    new YAMLDocumentSymbolProvider(),
+    { language: 'yaml' },
+    new YAMLDocumentSymbolProvider()
   );
 
   context.subscriptions.push(disposable);
