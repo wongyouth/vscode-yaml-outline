@@ -7,18 +7,6 @@ export type KeyRange = {
 };
 
 export class YamlParser {
-  public readonly id = 'yaml';
-  public readonly languageIds: string[];
-  public readonly supportedExts: string;
-
-  constructor() {
-    this.languageIds = ['yaml'];
-    this.supportedExts = 'ya?ml';
-  }
-
-  annotationSupported = true;
-  annotationLanguageIds = ['yaml'];
-
   parseAST(text: string) {
     const doc = Yaml.parseDocument(text);
 
@@ -50,9 +38,5 @@ export class YamlParser {
     };
 
     return findPairs(doc.contents);
-  }
-
-  navigateToKey(text: string, keypath: string) {
-    return this.parseAST(text).find((k) => k.key === keypath);
   }
 }
