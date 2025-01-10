@@ -34,12 +34,20 @@
     ],
     "configuration": {
       "type": "object",
-      "title": "YAML Symbols Configuration",
+      "title": "YAML-Symbols",
       "properties": {
         "yaml-symbols.showLeafNodesOnlyInOutline": {
           "type": "boolean",
           "default": true,
           "description": "Show leaf nodes only in outline."
+        },
+        "yaml-symbols.ignoredRootKeyForFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Ignore glob patterns to ignore the root key. Files in that list will not show the root key in the key path."
         }
       }
     }
@@ -73,6 +81,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
+    "minimatch": "^10.0.1",
     "yaml": "^2.6.1"
   }
 }

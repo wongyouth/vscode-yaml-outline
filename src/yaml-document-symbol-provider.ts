@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { CancellationToken, TextDocument } from 'vscode';
 import { logger } from './logger';
+import { needToRemoveRootKey } from './util';
 import { parseYaml } from './yaml-parser';
 
 /**
@@ -12,7 +13,8 @@ export class YAMLDocumentSymbolProvider {
 
     const text = document.getText();
 
-    const items = parseYaml(text);
+    const removeRootKey: boolean = needToRemoveRootKey(document);
+    const items = parseYaml(text, removeRootKey);
 
     logger.debug(JSON.stringify(items));
 
