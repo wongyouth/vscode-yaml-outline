@@ -1,10 +1,16 @@
-import Yaml, { isMap, isPair, isScalar, isSeq, Node, Pair } from 'yaml';
+import Yaml, { isMap, isPair, isScalar, isSeq, Node, Pair, Scalar } from 'yaml';
 
 export type KeyRange = {
   start: number;
   end: number;
   key: string;
+  leaf: boolean;
 };
+
+export function parseYaml(text: string) {
+  const doc = Yaml.parseDocument(text);
+  return getKeys(doc.contents);
+}
 
 function getKeys(node: Node | Pair | null, path: string[] = []): KeyRange[] {
   if (isMap(node)) {
@@ -13,7 +19,7 @@ function getKeys(node: Node | Pair | null, path: string[] = []): KeyRange[] {
 
   if (isPair(node) && isScalar(node.key)) {
     if (isMap(node.value)) {
-      return getKeys(node.value, [...path, node.key.toString()]);
+      return keyPath(node.key, path).concat(getKeys(node.value, [...path, node.key.toString()]));
     }
 
     if (node.key.range) {
@@ -34,6 +40,7 @@ function getKeys(node: Node | Pair | null, path: string[] = []): KeyRange[] {
           start,
           end,
           key,
+          leaf: true,
         },
       ];
     }
@@ -42,7 +49,20 @@ function getKeys(node: Node | Pair | null, path: string[] = []): KeyRange[] {
   return [];
 }
 
-export function parseYaml(text: string) {
-  const doc = Yaml.parseDocument(text);
-  return getKeys(doc.contents);
+function keyPath(key: Scalar, path: string[]): KeyRange[] {
+  if (key.range) {
+    const [start, _end, nodeEnd] = key.range;
+    const keyPath = [...path, key.toString()].join('.');
+
+    return [
+      {
+        start,
+        end: nodeEnd,
+        key: keyPath,
+        leaf: false, // has sub level keys.
+      },
+    ];
+  } else {
+    return [];
+  }
 }
