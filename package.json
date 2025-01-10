@@ -25,6 +25,14 @@
   "activationEvents": [
     "onLanguage:yaml"
   ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "yaml-symbols.copyKeyPath",
+        "title": "Copy YAML Key Path"
+      }
+    ]
+  },
   "main": "./dist/extension.js",
   "scripts": {
     "vscode:prepublish": "pnpm run package",
