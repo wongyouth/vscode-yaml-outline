@@ -16,9 +16,16 @@ export class YAMLDocumentSymbolProvider {
 
     logger.debug(JSON.stringify(items));
 
+    const showLeafNodeOnly: boolean =
+      vscode.workspace.getConfiguration('yaml-symbols').showLeafNodesOnlyInOutline;
+
     let symbols = [];
 
     for (let item of items) {
+      if (showLeafNodeOnly && !item.leaf) {
+        continue;
+      }
+
       const range = new vscode.Range(
         document.positionAt(item.start),
         document.positionAt(item.end),
