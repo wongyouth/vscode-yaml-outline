@@ -1,4 +1,4 @@
-import Yaml, { isMap, isPair, isScalar, Node, Pair } from 'yaml';
+import Yaml, { isMap, isPair, isScalar, isSeq, Node, Pair } from 'yaml';
 
 export type KeyRange = {
   start: number;
@@ -17,8 +17,17 @@ function getKeys(node: Node | Pair | null, path: string[] = []): KeyRange[] {
     }
 
     if (node.key.range) {
-      const [start, end, _nodeEnd] = node.key.range;
+      const [start, _end, nodeEnd] = node.key.range;
       const key = [...path, node.key.toString()].join('.');
+
+      let end = nodeEnd;
+
+      if (isScalar(node.value) || isSeq(node.value)) {
+        if (node.value.range) {
+          const [_start, _end, nodeEnd] = node.value.range;
+          end = nodeEnd;
+        }
+      }
 
       return [
         {
