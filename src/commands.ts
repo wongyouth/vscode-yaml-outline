@@ -11,7 +11,7 @@ export function copyKeyPath(editor: vscode.TextEditor | undefined) {
     items.find((item) => {
       if (item.end >= offset && item.start <= offset) {
         vscode.env.clipboard.writeText(item.key);
-        vscode.window.showInformationMessage(item.key);
+        vscode.window.showInformationMessage(`YAML path copied: ${item.key}`);
 
         return true;
       }
