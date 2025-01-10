@@ -29,7 +29,7 @@
     "commands": [
       {
         "command": "yaml-symbols.copyKeyPath",
-        "title": "Copy YAML key path"
+        "title": "YAML-Symbols: Copy key path"
       }
     ],
     "configuration": {
