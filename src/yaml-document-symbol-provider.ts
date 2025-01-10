@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { CancellationToken, TextDocument } from 'vscode';
-import { YamlParser } from './yaml-parser';
 import { logger } from './logger';
+import { YamlParser } from './yaml-parser';
 
 /**
  * YAMLDocumentSymbolProvider
@@ -22,22 +22,12 @@ export class YAMLDocumentSymbolProvider {
     for (let item of items) {
       const range = new vscode.Range(
         document.positionAt(item.start),
-        document.positionAt(item.end)
+        document.positionAt(item.end),
       );
 
-      const location = new vscode.Location(
-        vscode.Uri.file(document.fileName),
-        range
-      );
+      const location = new vscode.Location(document.uri, range);
 
-      symbols.push(
-        new vscode.SymbolInformation(
-          item.key,
-          vscode.SymbolKind.Key,
-          'path',
-          location
-        )
-      );
+      symbols.push(new vscode.SymbolInformation(item.key, vscode.SymbolKind.Key, 'path', location));
     }
 
     return symbols;
