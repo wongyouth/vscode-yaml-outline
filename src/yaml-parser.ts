@@ -26,51 +26,42 @@ function getKeys(node: Node | Pair | null, option: Option): KeyRange[] {
 
   if (isPair(node) && isScalar(node.key)) {
     if (isMap(node.value)) {
-      return keyPath(node.key, path).concat(
-        getKeys(node.value, { path: [...path, node.key.toString()], removeRootKey }),
-      );
+      const branchNodes = keyPath(node.key, path, removeRootKey, false);
+
+      const leafNodes = getKeys(node.value, {
+        path: [...path, node.key.toString()],
+        removeRootKey,
+      });
+
+      return branchNodes.concat(leafNodes);
     }
 
-    if (node.key.range) {
-      const [start, _end, nodeEnd] = node.key.range;
-      const keyPath = [...path, node.key.toString()].join('.');
+    const leafNodes = keyPath(node.key, path, removeRootKey, true);
 
-      let end = nodeEnd;
-
-      if (isScalar(node.value) || isSeq(node.value)) {
-        if (node.value.range) {
-          const [_start, _end, nodeEnd] = node.value.range;
-          end = nodeEnd;
-        }
+    if (isScalar(node.value) || isSeq(node.value)) {
+      if (leafNodes.length && node.value.range) {
+        const [_start, _end, nodeEnd] = node.value.range;
+        leafNodes[0].end = nodeEnd;
       }
-
-      const key = removeRootKey ? removeRoot(keyPath) : keyPath;
-
-      return [
-        {
-          start,
-          end,
-          key,
-          leaf: true,
-        },
-      ];
     }
+
+    return leafNodes;
   }
 
   return [];
 }
 
-function keyPath(key: Scalar, path: string[]): KeyRange[] {
-  if (key.range) {
-    const [start, _end, nodeEnd] = key.range;
-    const keyPath = [...path, key.toString()].join('.');
+function keyPath(node: Scalar, path: string[], removeRootKey: boolean, leaf: boolean): KeyRange[] {
+  if (node.range) {
+    const [start, _end, end] = node.range;
+    const key = [...removeRoot(path, removeRootKey), node.toString()].join('.');
 
     return [
       {
         start,
-        end: nodeEnd,
-        key: keyPath,
-        leaf: false, // has sub level keys.
+        end,
+        key,
+        leaf,
       },
     ];
   } else {
@@ -78,7 +69,6 @@ function keyPath(key: Scalar, path: string[]): KeyRange[] {
   }
 }
 
-function removeRoot(path: string): string {
-  const parts = path.split('.');
-  return parts.slice(1).join('.');
+function removeRoot(keys: string[], remove: boolean): string[] {
+  return remove ? keys.slice(1) : keys;
 }
