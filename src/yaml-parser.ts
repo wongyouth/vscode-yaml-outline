@@ -1,4 +1,4 @@
-import Yaml, { isMap, isPair, isScalar } from 'yaml';
+import Yaml, { isMap, isPair, isScalar, Node, Pair } from 'yaml';
 
 export type KeyRange = {
   start: number;
@@ -6,7 +6,7 @@ export type KeyRange = {
   key: string;
 };
 
-function getKeys(node: any, path: string[] = []): KeyRange[] {
+function getKeys(node: Node | Pair | null, path: string[] = []): KeyRange[] {
   if (isMap(node)) {
     return node.items.flatMap((m) => getKeys(m, path));
   }
