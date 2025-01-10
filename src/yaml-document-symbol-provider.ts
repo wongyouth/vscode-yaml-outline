@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { CancellationToken, TextDocument } from 'vscode';
 import { logger } from './logger';
-import { YamlParser } from './yaml-parser';
+import { parseYaml } from './yaml-parser';
 
 /**
  * YAMLDocumentSymbolProvider
@@ -12,8 +12,7 @@ export class YAMLDocumentSymbolProvider {
 
     const text = document.getText();
 
-    const parser = new YamlParser();
-    const items = parser.parseAST(text);
+    const items = parseYaml(text);
 
     logger.debug(JSON.stringify(items));
 

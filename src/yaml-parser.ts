@@ -33,10 +33,7 @@ function getKeys(node: any, path: string[] = []): KeyRange[] {
   return [];
 }
 
-export class YamlParser {
-  parseAST(text: string) {
-    const doc = Yaml.parseDocument(text);
-
-    return getKeys(doc.contents);
-  }
+export function parseYaml(text: string) {
+  const doc = Yaml.parseDocument(text);
+  return getKeys(doc.contents);
 }
