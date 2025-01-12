@@ -1,82 +1,107 @@
-# yaml-symbols README
+# YAML Symbols Extension
 
-Display all key paths as symbols in YAML files
+Enhance your YAML editing experience with improved symbol navigation and key path management.
 
 ## Features
 
-Show key path as symbols in outline window.
+### Outline View
 
-![outline](outline.jpg)
+- Display all key paths as symbols in the outline window
+- Quickly navigate through complex YAML structures
 
-Open Symbol window to search.
+![Outline View](outline.jpg)
+
+### Quick Search
+
+- Search for symbols across your YAML files
+- Fast navigation to specific keys
 
 ![Quick Search](quick-search.jpg)
 
-Show key path of the current position on the status bar. Click on the status item will copy the current key path
+### Status Bar Integration
 
-![status-item](status-item.jpg)
+- Display the current key path in the status bar
+- Click to copy the current key path
+- Real-time updates as you navigate through the file
+- Line number display for YAML files
 
-A command is available to Copy the curent key Path.
+![Status Bar](status-item.jpg)
 
-![Copy Key](copy-key-path.jpg)
+### Key Path Management
 
-## Extension Settings
+- Copy the current key path with a single command
+- Easily reference and share key paths
 
-![Config](config.png)
+![Copy Key Path](copy-key-path.jpg)
 
-1.  Ignore root key. Hide root key for sepcific files. You can add file patterns for hiding. Refers to [minimatch](https://github.com/isaacs/minimatch) for how to use the patterns.
+## Installation
 
-    This configure is useful for framework like Ruby on Rails as it use yaml as locale files.
-    In Ruby on Rails framework the top key is the locale name. for example the full key path is like `zh-CN.key.to.value`.
-    If this configure is set, it can remove the root key `zh-CN`, and use the path `key.to.value` as the key path.
+1. Open the Extensions view in VS Code (`Ctrl+Shift+X` or `Cmd+Shift+X` on macOS)
+2. Search for "YAML-Symbols"
+3. Click Install
 
-1.  Show leaf node only. Default is true.
-    This is useful if users want to show a non-leaf as a key path.
-    For example, in the following yaml content.
+## Configuration
 
-    ```yaml
-    ---
-    parent:
-      first_child_name: Ryan
-      second_child_name: Lee
-    ```
+![Configuration](config.png)
 
-    If this config is set `true`, only 2 key paths will get:
+### Settings
 
-        - parent.first_child_name
-        - parent.second_child_name
+1. **Ignore Root Key**
 
-    If this config is set `false`, 3 key paths will get.
+   - Hide root key for specific files using file patterns
+   - Supports [minimatch](https://github.com/isaacs/minimatch) patterns
+   - Useful for frameworks like Ruby on Rails where the top key represents locale names
+   - Example: Converts `zh-CN.key.to.value` to `key.to.value`
 
-        - parent
-        - parent.first_child_name
-        - parent.second_child_name
+2. **Show Leaf Node Only** (default: true)
+   - Controls whether to display only leaf nodes or all nodes in the outline
+   - Example YAML:
+     ```yaml
+     parent:
+       first_child_name: Ryan
+       second_child_name: Lee
+     ```
+   - When enabled (true):
+     - parent.first_child_name
+     - parent.second_child_name
+   - When disabled (false):
+     - parent
+     - parent.first_child_name
+     - parent.second_child_name
+
+## Usage
+
+1. Open any YAML file
+2. Use the Outline view (`Ctrl+Shift+O` or `Cmd+Shift+O` on macOS) to navigate symbols
+3. The status bar will show:
+   - Current key path (click to copy)
+4. Click the key path on the status bar to copy the key path.
 
 ## Known Issues
 
-None
+None currently reported. Please open an issue if you encounter any problems.
 
 ## Release Notes
 
 ### 0.2.0
 
-Add status indicator to show current key path.
+- Added status bar integration with:
+  - Current key path display
+  - Click-to-copy functionality
 
 ### 0.1.1
 
-Bug fixes
+- Bug fixes and stability improvements
 
 ### 0.1.0
 
-- Add 2 configurations
-
+- Added configuration options:
   - Ignore root key
   - Show leaf node only
-
-- Add command to copy key path.
+- Added copy key path command
 
 ### 0.0.1
 
-First release
+- Initial release with basic symbol navigation
 
-**Enjoy!**
+**Enjoy enhanced YAML editing!**
