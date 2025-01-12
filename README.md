@@ -54,6 +54,10 @@ None
 
 ## Release Notes
 
+### 0.1.1
+
+Bug fixes
+
 ### 0.1.0
 
 - Add 2 configurations
