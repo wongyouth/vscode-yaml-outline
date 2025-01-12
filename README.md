@@ -12,7 +12,11 @@ Open Symbol window to search.
 
 ![Quick Search](quick-search.jpg)
 
-Copy key Path
+Show key path of the current position on the status bar. Click on the status item will copy the current key path
+
+![status-item](status-item.jpg)
+
+A command is available to Copy the curent key Path.
 
 ![Copy Key](copy-key-path.jpg)
 
@@ -53,6 +57,10 @@ Copy key Path
 None
 
 ## Release Notes
+
+### 0.2.0
+
+Add status indicator to show current key path.
 
 ### 0.1.1
 
