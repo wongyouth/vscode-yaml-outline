@@ -31,7 +31,7 @@ Enhance your YAML editing experience with improved symbol navigation and key pat
 - Copy the current key path with a single command
 - Easily reference and share key paths
 
-![Copy Key Path](copy-key-path.jpg)
+![Copy Key Path](copy-key-path.png)
 
 ## Installation
 

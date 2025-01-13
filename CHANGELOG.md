@@ -4,6 +4,10 @@ All notable changes to the "YAML Outline" extension will be documented in this f
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.3.1
+
+- Update Readme
+
 ## 0.3.0
 
 - Rename extension from `YAML-Symbols` to `YAML Outline`
