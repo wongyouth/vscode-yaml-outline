@@ -26,7 +26,7 @@ export function disposeYAMLDocumentSymbolProvider() {
  */
 const YAMLDocumentSymbolProvider: vscode.DocumentSymbolProvider = {
   provideDocumentSymbols(document: TextDocument, _token: CancellationToken) {
-    logger.info('Generates YAML symbols for', document.fileName);
+    logger.info('Generates YAML Outline for', document.fileName);
 
     const text = document.getText();
 
@@ -36,7 +36,7 @@ const YAMLDocumentSymbolProvider: vscode.DocumentSymbolProvider = {
     logger.debug(JSON.stringify(items));
 
     const showLeafNodeOnly: boolean =
-      vscode.workspace.getConfiguration('yaml-symbols').showLeafNodesOnlyInOutline;
+      vscode.workspace.getConfiguration('yaml-outline').showLeafNodesOnlyInOutline;
 
     let symbols = [];
 

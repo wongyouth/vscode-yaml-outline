@@ -18,7 +18,7 @@ export function needToRemoveRootKey(doc: TextDocument): boolean {
 }
 
 function ignoredRootKeyForFiles(): string[] {
-  return vscode.workspace.getConfiguration('yaml-symbols').ignoredRootKeyForFiles;
+  return vscode.workspace.getConfiguration('yaml-outline').ignoredRootKeyForFiles;
 }
 
 export function currentKeyPath(editor: vscode.TextEditor | undefined): string | undefined {

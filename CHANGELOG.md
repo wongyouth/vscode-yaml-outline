@@ -1,8 +1,16 @@
 # Change Log
 
-All notable changes to the "yaml-symbols" extension will be documented in this file.
+All notable changes to the "YAML Outline" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+
+## 0.3.1
+
+- Update Readme
+
+## 0.3.0
+
+- Rename extension from `YAML-Symbols` to `YAML Outline`
 
 ## 0.2.1
 

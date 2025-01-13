@@ -6,7 +6,7 @@ let statusBarItem: vscode.StatusBarItem;
 export function createStatusItem(context: vscode.ExtensionContext) {
   // Create status bar item
   statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
-  statusBarItem.command = 'yaml-symbols.copyKeyPath';
+  statusBarItem.command = 'yaml-outline.copyKeyPath';
   context.subscriptions.push(statusBarItem);
 
   // Update status bar when active editor changes
