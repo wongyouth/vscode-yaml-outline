@@ -1,14 +1,14 @@
 {
-  "name": "vscode-yaml-symbols",
-  "displayName": "YAML-Symbols",
-  "description": "Use key path as symbols for YAML files",
+  "name": "yaml-outline",
+  "displayName": "YAML Outline",
+  "description": "List all key path in the outline for YAML files",
   "publisher": "wongyouth",
   "homepage": "https://github.com/wongyouth/vscode-yaml-symbols",
   "bugs": {
     "url": "https://github.com/wongyouth/vscode-yaml-symbols/issues"
   },
   "repository": "https://github.com/wongyouth/vscode-yaml-symbols",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -17,8 +17,8 @@
   ],
   "keywords": [
     "yaml",
-    "symbols",
     "outline",
+    "symbols",
     "path",
     "key"
   ],
@@ -28,20 +28,20 @@
   "contributes": {
     "commands": [
       {
-        "command": "yaml-symbols.copyKeyPath",
-        "title": "YAML-Symbols: Copy key path"
+        "command": "yaml-outline.copyKeyPath",
+        "title": "YAML Outline: Copy key path"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "YAML-Symbols",
+      "title": "YAML Outline",
       "properties": {
-        "yaml-symbols.showLeafNodesOnlyInOutline": {
+        "yaml-outline.showLeafNodesOnlyInOutline": {
           "type": "boolean",
           "default": true,
           "description": "Show leaf nodes only in outline."
         },
-        "yaml-symbols.ignoredRootKeyForFiles": {
+        "yaml-outline.ignoredRootKeyForFiles": {
           "type": "array",
           "items": {
             "type": "string"

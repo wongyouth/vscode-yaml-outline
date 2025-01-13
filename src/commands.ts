@@ -4,7 +4,7 @@ import { currentKeyPath } from './util';
 let disposable: vscode.Disposable;
 
 export function registerCommands(context: vscode.ExtensionContext) {
-  disposable = vscode.commands.registerCommand('yaml-symbols.copyKeyPath', () =>
+  disposable = vscode.commands.registerCommand('yaml-outline.copyKeyPath', () =>
     copyKeyPath(vscode.window.activeTextEditor),
   );
 

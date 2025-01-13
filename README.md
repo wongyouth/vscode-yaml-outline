@@ -1,4 +1,4 @@
-# YAML Symbols Extension
+# YAML Outline Extension
 
 Enhance your YAML editing experience with improved symbol navigation and key path management.
 
@@ -36,7 +36,7 @@ Enhance your YAML editing experience with improved symbol navigation and key pat
 ## Installation
 
 1. Open the Extensions view in VS Code (`Ctrl+Shift+X` or `Cmd+Shift+X` on macOS)
-2. Search for "YAML-Symbols"
+2. Search for "YAML Outline"
 3. Click Install
 
 ## Configuration
