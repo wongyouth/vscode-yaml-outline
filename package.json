@@ -3,11 +3,11 @@
   "displayName": "YAML Outline",
   "description": "List all key path in the outline for YAML files",
   "publisher": "wongyouth",
-  "homepage": "https://github.com/wongyouth/vscode-yaml-symbols",
+  "homepage": "https://github.com/wongyouth/vscode-yaml-outline",
   "bugs": {
-    "url": "https://github.com/wongyouth/vscode-yaml-symbols/issues"
+    "url": "https://github.com/wongyouth/vscode-yaml-outline/issues"
   },
-  "repository": "https://github.com/wongyouth/vscode-yaml-symbols",
+  "repository": "https://github.com/wongyouth/vscode-yaml-outline",
   "version": "0.3.0",
   "engines": {
     "vscode": "^1.96.0"
