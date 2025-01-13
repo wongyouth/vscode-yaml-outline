@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { copyKeyPath } from './commands';
+import { disposeCommands, registerCommands } from './commands';
 import { createStatusItem, disposeStatusItem } from './status-item';
 import {
   disposeYAMLDocumentSymbolProvider,
@@ -14,21 +14,14 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "yaml-symbols" is now active!');
 
   // Register all extension components
-  createStatusItem(context);
   registerYAMLDocumentSymbolProvider(context);
-  registerCommand(context);
-}
-
-function registerCommand(context: vscode.ExtensionContext) {
-  const disposable = vscode.commands.registerCommand('yaml-symbols.copyKeyPath', () =>
-    copyKeyPath(vscode.window.activeTextEditor),
-  );
-
-  context.subscriptions.push(disposable);
+  registerCommands(context);
+  createStatusItem(context);
 }
 
 // This method is called when your extension is deactivated
 export function deactivate() {
   disposeStatusItem();
+  disposeCommands();
   disposeYAMLDocumentSymbolProvider();
 }
