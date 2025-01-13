@@ -23,7 +23,6 @@ Enhance your YAML editing experience with improved symbol navigation and key pat
 - Display the current key path in the status bar
 - Click to copy the current key path
 - Real-time updates as you navigate through the file
-- Line number display for YAML files
 
 ![Status Bar](status-item.jpg)
 
