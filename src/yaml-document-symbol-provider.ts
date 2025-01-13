@@ -4,11 +4,28 @@ import { logger } from './logger';
 import { needToRemoveRootKey } from './util';
 import { parseYaml } from './yaml-parser';
 
+let disposable: vscode.Disposable;
+
+export function registerYAMLDocumentSymbolProvider(context: vscode.ExtensionContext) {
+  disposable = vscode.languages.registerDocumentSymbolProvider(
+    { language: 'yaml' },
+    YAMLDocumentSymbolProvider,
+  );
+
+  context.subscriptions.push(disposable);
+}
+
+export function disposeYAMLDocumentSymbolProvider() {
+  if (disposable) {
+    disposable.dispose();
+  }
+}
+
 /**
  * YAMLDocumentSymbolProvider
  */
-export class YAMLDocumentSymbolProvider {
-  provideDocumentSymbols(document: TextDocument, token: CancellationToken) {
+const YAMLDocumentSymbolProvider: vscode.DocumentSymbolProvider = {
+  provideDocumentSymbols(document: TextDocument, _token: CancellationToken) {
     logger.info('Generates YAML symbols for', document.fileName);
 
     const text = document.getText();
@@ -39,5 +56,5 @@ export class YAMLDocumentSymbolProvider {
     }
 
     return symbols;
-  }
-}
+  },
+};

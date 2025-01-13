@@ -3,7 +3,10 @@
 import * as vscode from 'vscode';
 import { copyKeyPath } from './commands';
 import { createStatusItem, disposeStatusItem } from './status-item';
-import { YAMLDocumentSymbolProvider } from './yaml-document-symbol-provider';
+import {
+  disposeYAMLDocumentSymbolProvider,
+  registerYAMLDocumentSymbolProvider,
+} from './yaml-document-symbol-provider';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -12,17 +15,8 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Register all extension components
   createStatusItem(context);
-  registerDocumentSymbolProvider(context);
+  registerYAMLDocumentSymbolProvider(context);
   registerCommand(context);
-}
-
-function registerDocumentSymbolProvider(context: vscode.ExtensionContext) {
-  const disposable = vscode.languages.registerDocumentSymbolProvider(
-    { language: 'yaml' },
-    new YAMLDocumentSymbolProvider(),
-  );
-
-  context.subscriptions.push(disposable);
 }
 
 function registerCommand(context: vscode.ExtensionContext) {
@@ -36,4 +30,5 @@ function registerCommand(context: vscode.ExtensionContext) {
 // This method is called when your extension is deactivated
 export function deactivate() {
   disposeStatusItem();
+  disposeYAMLDocumentSymbolProvider();
 }
