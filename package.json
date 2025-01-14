@@ -41,6 +41,11 @@
           "default": true,
           "description": "Show leaf nodes only in outline."
         },
+        "yaml-outline.showKeyPathInStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show key path in status bar."
+        },
         "yaml-outline.ignoredRootKeyForFiles": {
           "type": "array",
           "items": {

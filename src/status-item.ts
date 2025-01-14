@@ -1,9 +1,14 @@
 import * as vscode from 'vscode';
 import { currentKeyPath } from './util';
+import { getConfig } from './config';
 
 let statusBarItem: vscode.StatusBarItem;
 
 export function createStatusItem(context: vscode.ExtensionContext) {
+  if (!getConfig().showKeyPathInStatusBar) {
+    return;
+  }
+
   // Create status bar item
   statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
   statusBarItem.command = 'yaml-outline.copyKeyPath';

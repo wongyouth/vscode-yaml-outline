@@ -3,6 +3,7 @@ import { logger } from './logger';
 
 type Config = {
   showLeafNodesOnlyInOutline: boolean;
+  showKeyPathInStatusBar: boolean;
   ignoredRootKeyForFiles: string[];
 };
 
@@ -13,6 +14,7 @@ export const getConfig = (): Config => {
 
   return {
     showLeafNodesOnlyInOutline: config.get('showLeafNodesOnlyInOutline', true),
+    showKeyPathInStatusBar: config.get('showKeyPathInStatusBar', true),
     ignoredRootKeyForFiles: config.get('ignoredRootKeyForFiles', []),
   };
 };
