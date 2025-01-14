@@ -1,60 +1,52 @@
 import * as vscode from 'vscode';
 import { CancellationToken, TextDocument } from 'vscode';
 import { logger } from './logger';
-import { needToRemoveRootKey } from './util';
-import { parseYaml } from './yaml-parser';
+import { getKeysFromYamlFile } from './util';
+import { getConfig } from './config';
 
 let disposable: vscode.Disposable;
 
-export function registerYAMLDocumentSymbolProvider(context: vscode.ExtensionContext) {
+export function registerProvider(context: vscode.ExtensionContext) {
   disposable = vscode.languages.registerDocumentSymbolProvider(
     { language: 'yaml' },
-    YAMLDocumentSymbolProvider,
+    YAMLDocumentSymbolProvider
   );
 
   context.subscriptions.push(disposable);
 }
 
-export function disposeYAMLDocumentSymbolProvider() {
-  if (disposable) {
-    disposable.dispose();
-  }
+export function disposeProvider() {
+  disposable?.dispose();
 }
 
 /**
  * YAMLDocumentSymbolProvider
  */
-const YAMLDocumentSymbolProvider: vscode.DocumentSymbolProvider = {
-  provideDocumentSymbols(document: TextDocument, _token: CancellationToken) {
-    logger.info('Generates YAML Outline for', document.fileName);
+const YAMLDocumentSymbolProvider: vscode.DocumentSymbolProvider = { provideDocumentSymbols };
 
-    const text = document.getText();
+function provideDocumentSymbols(document: TextDocument, token: CancellationToken) {
+  return getSymbols(document);
+}
 
-    const removeRootKey: boolean = needToRemoveRootKey(document);
-    const items = parseYaml(text, removeRootKey);
+function getSymbols(document: TextDocument) {
+  logger.info('Generates YAML Outline for', document.fileName);
 
-    logger.debug(JSON.stringify(items));
+  const showLeafNodeOnly: boolean = getConfig().showLeafNodesOnlyInOutline;
+  const items = getKeysFromYamlFile(document);
 
-    const showLeafNodeOnly: boolean =
-      vscode.workspace.getConfiguration('yaml-outline').showLeafNodesOnlyInOutline;
+  const symbols = [];
 
-    let symbols = [];
-
-    for (let item of items) {
-      if (showLeafNodeOnly && !item.leaf) {
-        continue;
-      }
-
-      const range = new vscode.Range(
-        document.positionAt(item.start),
-        document.positionAt(item.end),
-      );
-
-      const location = new vscode.Location(document.uri, range);
-
-      symbols.push(new vscode.SymbolInformation(item.key, vscode.SymbolKind.Key, 'path', location));
+  for (let item of items) {
+    if (showLeafNodeOnly && !item.leaf) {
+      continue;
     }
 
-    return symbols;
-  },
-};
+    const range = new vscode.Range(document.positionAt(item.start), document.positionAt(item.end));
+    const location = new vscode.Location(document.uri, range);
+    const symbol = new vscode.SymbolInformation(item.key, vscode.SymbolKind.Key, 'path', location);
+
+    symbols.push(symbol);
+  }
+
+  return symbols;
+}

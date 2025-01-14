@@ -1,15 +1,18 @@
 import { minimatch } from 'minimatch';
 import * as vscode from 'vscode';
 import { TextDocument } from 'vscode';
-import { parseYaml } from './yaml-parser';
+import { KeyRange, parseYaml } from './yaml-parser';
+import { logger } from './logger';
+import { getConfig } from './config';
 
-export function needToRemoveRootKey(doc: TextDocument): boolean {
-  const patterns = ignoredRootKeyForFiles();
+function needToRemoveRootKey(doc: TextDocument): boolean {
+  const patterns = getConfig().ignoredRootKeyForFiles;
 
   const relativePath = vscode.workspace.asRelativePath(doc.uri);
 
-  for (let pattern of patterns) {
+  for (const pattern of patterns) {
     if (minimatch(relativePath, pattern)) {
+      logger.debug('ignoredRootKeyForFiles found', pattern);
       return true;
     }
   }
@@ -17,14 +20,9 @@ export function needToRemoveRootKey(doc: TextDocument): boolean {
   return false;
 }
 
-function ignoredRootKeyForFiles(): string[] {
-  return vscode.workspace.getConfiguration('yaml-outline').ignoredRootKeyForFiles;
-}
-
 export function currentKeyPath(editor: vscode.TextEditor | undefined): string | undefined {
   if (editor?.document.languageId === 'yaml') {
-    const removeRootKey: boolean = needToRemoveRootKey(editor.document);
-    const items = parseYaml(editor.document.getText(), removeRootKey);
+    const items = getKeysFromYamlFile(editor.document);
 
     const post = editor.selection.active;
     const offset = editor.document.offsetAt(post);
@@ -37,4 +35,18 @@ export function currentKeyPath(editor: vscode.TextEditor | undefined): string | 
 
     return item?.key;
   }
+}
+
+export function getKeysFromYamlFile(document: TextDocument): KeyRange[] {
+  const text = document.getText();
+  const removeRootKey: boolean = needToRemoveRootKey(document);
+  const items = parseYaml(text, removeRootKey);
+
+  if (items.length > 100) {
+    logger.debug('getKeysFromYamlFile: items size', items.length);
+  } else {
+    logger.debug('getKeysFromYamlFile: items', JSON.stringify(items));
+  }
+
+  return items;
 }

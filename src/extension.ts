@@ -3,10 +3,7 @@
 import * as vscode from 'vscode';
 import { disposeCommands, registerCommands } from './commands';
 import { createStatusItem, disposeStatusItem } from './status-item';
-import {
-  disposeYAMLDocumentSymbolProvider,
-  registerYAMLDocumentSymbolProvider,
-} from './yaml-document-symbol-provider';
+import { disposeProvider, registerProvider } from './yaml-document-symbol-provider';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -14,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "yaml-outline" is now active!');
 
   // Register all extension components
-  registerYAMLDocumentSymbolProvider(context);
+  registerProvider(context);
   registerCommands(context);
   createStatusItem(context);
 }
@@ -23,5 +20,5 @@ export function activate(context: vscode.ExtensionContext) {
 export function deactivate() {
   disposeStatusItem();
   disposeCommands();
-  disposeYAMLDocumentSymbolProvider();
+  disposeProvider();
 }

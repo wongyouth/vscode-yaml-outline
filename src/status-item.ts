@@ -14,11 +14,9 @@ export function createStatusItem(context: vscode.ExtensionContext) {
 
   // Update status bar when selection changes
   vscode.window.onDidChangeTextEditorSelection(
-    (event) => {
-      updateStatusBarItem(event.textEditor);
-    },
+    (event) => updateStatusBarItem(event.textEditor),
     null,
-    context.subscriptions,
+    context.subscriptions
   );
 
   // Update status bar when text changes
@@ -32,19 +30,18 @@ export function createStatusItem(context: vscode.ExtensionContext) {
       }
     },
     null,
-    context.subscriptions,
+    context.subscriptions
   );
 
   // Update status bar for current editor
-  if (vscode.window.activeTextEditor) {
-    updateStatusBarItem(vscode.window.activeTextEditor);
-  }
+  updateStatusBarItem(vscode.window.activeTextEditor);
 }
 
 function updateStatusBarItem(editor: vscode.TextEditor | undefined): void {
-  if (editor && editor.document.languageId === 'yaml') {
-    const key = currentKeyPath(editor);
-    statusBarItem.text = key || '';
+  const key = currentKeyPath(editor);
+
+  if (key) {
+    statusBarItem.text = key;
     statusBarItem.show();
   } else {
     statusBarItem.hide();
@@ -52,7 +49,5 @@ function updateStatusBarItem(editor: vscode.TextEditor | undefined): void {
 }
 
 export function disposeStatusItem() {
-  if (statusBarItem) {
-    statusBarItem.dispose();
-  }
+  statusBarItem?.dispose();
 }
