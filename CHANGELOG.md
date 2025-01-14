@@ -6,7 +6,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## 0.3.2
 
-- Add config to hide key path in the status bar.
+- Add new config `showKeyPathInStatusBar` to provide a way to hide key path in status bar.
+- Code refinement
 
 ## 0.3.1
 

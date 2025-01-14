@@ -10,7 +10,7 @@ type Config = {
 export const getConfig = (): Config => {
   const config = vscode.workspace.getConfiguration('yaml-outline');
 
-  logger.debug('config is ', config.toJSON());
+  logger.debug('config is ', config);
 
   return {
     showLeafNodesOnlyInOutline: config.get('showLeafNodesOnlyInOutline', true),

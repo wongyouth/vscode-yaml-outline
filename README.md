@@ -84,6 +84,18 @@ None currently reported. Please open an issue if you encounter any problems.
 
 ## Release Notes
 
+### 0.3.2
+
+Add new config `showKeyPathInStatusBar` to provide a way to hide key path in status bar.
+
+### 0.3.1
+
+Update Readme
+
+### 0.3.0
+
+- Rename extension from `YAML-Symbols` to `YAML Outline`
+
 ### 0.2.0
 
 - Added status bar integration with:
