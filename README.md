@@ -68,6 +68,8 @@ Enhance your YAML editing experience with improved symbol navigation and key pat
      - parent.first_child_name
      - parent.second_child_name
 
+3. **Show Key Path in the Status Bar** (default: true)
+
 ## Usage
 
 1. Open any YAML file
