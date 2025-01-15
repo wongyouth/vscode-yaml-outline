@@ -2,6 +2,7 @@ import { getMonoid, pipe } from 'fp-ts/lib/function';
 import * as M from 'fp-ts/Monoid';
 import * as O from 'fp-ts/Option';
 import * as N from 'fp-ts/number';
+import * as A from 'fp-ts/Apply';
 
 type RetryStatus = {
   iterNumber: number; // the number of retries
@@ -18,14 +19,8 @@ const constPolicy = (delay: number): RetryPolicy => {
 };
 
 // no delay if less than limit
-const limitPolicy = (limit: number): RetryPolicy => {
-  return ({ iterNumber }) => {
-    if (iterNumber > limit) {
-      return O.none;
-    } else {
-      return O.some(0);
-    }
-  };
+const limitRetries = (limit: number): RetryPolicy => {
+  return ({ iterNumber }) => (iterNumber > limit ? O.none : O.some(0));
 };
 
 const exponetialBackoff = (delay: number): RetryPolicy => {
@@ -34,13 +29,11 @@ const exponetialBackoff = (delay: number): RetryPolicy => {
 
 // enable to set a maximum delay time
 function maxDelay(delay: number, policy: RetryPolicy): RetryPolicy {
-  return (status) => {
-    const time = policy(status);
-    return pipe(
-      time,
+  return (status) =>
+    pipe(
+      policy(status),
       O.map((t) => Math.min(t, delay))
     );
-  };
 }
 
 const applyPolicy =
@@ -50,7 +43,14 @@ const applyPolicy =
     previousDelay: policy(status),
   });
 
-const Monoid = getMonoid(M.max(N.Bounded));
+const M1 = M.max(N.Bounded);
+const S1 = A.getApplySemigroup(O.Apply)(M1);
+const MonoidForOptionNumber = {
+  concat: S1.concat,
+  empty: O.of(0),
+};
+
+const Monoid = getMonoid(MonoidForOptionNumber)<RetryStatus>();
 
 const startStatus: RetryStatus = {
   iterNumber: 0,
@@ -71,3 +71,17 @@ function dryRun(policy: RetryPolicy): Array<RetryStatus> {
 
   return list;
 }
+
+function main(): void {
+  const policy = maxDelay(
+    500,
+    M.concatAll(Monoid)([
+      constPolicy(50),
+      exponetialBackoff(1),
+      limitRetries(10),
+    ])
+  );
+  dryRun(policy);
+}
+
+main();
