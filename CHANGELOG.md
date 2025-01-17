@@ -4,6 +4,10 @@ All notable changes to the "YAML Outline" extension will be documented in this f
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## 0.3.3
+
+- Add logo.png
+
 ## 0.3.2
 
 - Add new config `showKeyPathInStatusBar` to provide a way to hide key path in status bar.

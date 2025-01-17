@@ -8,7 +8,8 @@
     "url": "https://github.com/wongyouth/vscode-yaml-outline/issues"
   },
   "repository": "https://github.com/wongyouth/vscode-yaml-outline",
-  "version": "0.3.2",
+  "icon": "assets/logo.png",
+  "version": "0.3.3",
   "engines": {
     "vscode": "^1.96.0"
   },
@@ -18,7 +19,7 @@
   "keywords": [
     "yaml",
     "outline",
-    "symbols",
+    "symbol",
     "path",
     "key"
   ],
